@@ -1,16 +1,11 @@
-%define		git_ver	cc7a18807663313ef111d86a75844ded0416a889
-
 Summary:	Tool for configuring the Openbox window manager
 Name:		obconf
 Version:	2.0.4
-Release:	0.%{git_ver}.1
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-#Source0:	http://icculus.org/openbox/obconf/%{name}-%{version}.tar.gz
-Source0:	%{name}-%{version}-%{git_ver}.tar.xz
-# Source0-md5:	b22e273721851dedad72acbc77eefb68
-Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-revert_9cffa6a9ddfc4074f3de8d0302404d70c2818d8f.patch
+Source0:	http://icculus.org/openbox/obconf/%{name}-%{version}.tar.gz
+# Source0-md5:	9271c5d2dc366d61f73665a5e8bceabc
 URL:		http://openbox.org/obconf/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -30,12 +25,10 @@ options such as the theme, desktop names, and focus settings.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 -R
 
-sed -i -e 's|no|nb|' po/LINGUAS
-mv -f po/{no,nb}.po
-rm -f po/stamp-po
+%{__sed} -i 's|no|nb|' po/LINGUAS
+%{__mv} po/{no,nb}.po
+%{__rm} po/stamp-po
 
 %build
 %{__autopoint}
